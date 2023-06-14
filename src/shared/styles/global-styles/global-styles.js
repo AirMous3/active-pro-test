@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     overflow-x: hidden;
     box-sizing: border-box;
+    background-color: #e3e3e3;
   }
 
   #root {
