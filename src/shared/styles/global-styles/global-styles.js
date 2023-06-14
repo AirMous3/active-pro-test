@@ -1,9 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
+import '@/shared/fonts/lato/lato.css';
+
 export const GlobalStyle = createGlobalStyle`
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Lato', sans-serif;
     touch-action: none;
     margin: 0;
     overflow-x: hidden;

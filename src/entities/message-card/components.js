@@ -18,11 +18,12 @@ export const MessageHeader = styled.div`
 `;
 
 export const AuthorImage = styled.div`
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   background-image: url(${image});
   background-repeat: no-repeat;
   background-size: 36px 36px;
+  background-position: bottom;
 `;
 
 export const AuthorInfoWrapper = styled.div`
