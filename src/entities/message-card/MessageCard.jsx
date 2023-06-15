@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 import { ReadMoreButton } from '@/shared';
 
 import * as S from './components';
@@ -35,11 +33,9 @@ export const MessageCard = ({
     <S.Container
       initial={animation.hidden}
       whileInView={animation.visible}
-      exit={animation.visible}
-      viewport={{ once: true, amount: 0.2 }}
-      layout
+      viewport={{ once: true, amount: 0.4 }}
     >
-      <motion.div>
+      <div>
         <S.MessageHeader>
           <S.AuthorImage />
 
@@ -66,7 +62,7 @@ export const MessageCard = ({
             {type === 'image' && <S.MessageImage src={url} alt="image" />}
           </S.MessageContentWrapper>
         </S.MessageWrapper>
-      </motion.div>
+      </div>
 
       <S.MessageFooter>
         <div>#Новое</div>
