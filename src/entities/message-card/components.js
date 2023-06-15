@@ -56,7 +56,6 @@ export const MessageContent = styled.div`
   letter-spacing: -0.035em;
   color: #333333;
   max-width: 720px;
-  margin-bottom: 20px;
 `;
 
 export const MessageContentWrapper = styled.div`

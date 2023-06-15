@@ -1,3 +1,5 @@
+import { ReadMoreButton } from '@/shared';
+
 import * as S from './components';
 
 export const MessageCard = ({
@@ -26,12 +28,12 @@ export const MessageCard = ({
         </S.MessageHeader>
 
         <S.MessageWrapper>
-          <S.MessageTime>
-            {time}
-          </S.MessageTime>
+          <S.MessageTime>{time}</S.MessageTime>
 
           <S.MessageContentWrapper>
-            <S.MessageContent>{content}</S.MessageContent>
+            <S.MessageContent>
+              <ReadMoreButton text={content} />
+            </S.MessageContent>
 
             {type === 'video' && (
               <video width="500" height="300" controls="controls">
