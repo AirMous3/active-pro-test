@@ -1,4 +1,7 @@
-import { ReadMoreButton } from '@/shared';
+import { useDispatch } from 'react-redux';
+
+import { addOrRemoveToFavorite } from '@/entities';
+import { ReadMoreButton, getTime } from '@/shared';
 
 import * as S from './components';
 
@@ -22,12 +25,17 @@ export const MessageCard = ({
   author,
   subtitle,
   content,
+  id,
+  favorite,
 }) => {
+  const dispatch = useDispatch();
   const type = attachments[0]?.type;
   const url = attachments[0]?.url;
-  const time = new Date(date)
-    .toLocaleTimeString('ru')
-    .replace(/(.*)\D\d+/, '$1');
+  const time = getTime(date);
+
+  const handleStar = () => {
+    dispatch(addOrRemoveToFavorite({ id }));
+  };
 
   return (
     <S.Container
@@ -43,6 +51,8 @@ export const MessageCard = ({
             <S.AuthorTitle>{author}</S.AuthorTitle>
             <S.AuthorSubTitle>{subtitle}</S.AuthorSubTitle>
           </S.AuthorInfoWrapper>
+
+          <S.Star $isActive={favorite} onClick={handleStar} />
         </S.MessageHeader>
 
         <S.MessageWrapper>

@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
+import activeStar from '@/shared/assets/icons/active-star.svg';
 import image from '@/shared/assets/icons/profile-image.svg';
+import starIcon from '@/shared/assets/icons/star-icon.svg';
 
 export const Container = styled(motion.li)`
   display: flex;
@@ -75,4 +77,15 @@ export const MessageFooter = styled.div`
 export const MessageImage = styled.img`
   max-width: 146px;
   user-select: none;
+`;
+
+export const Star = styled.div`
+  background-image: url(${({ $isActive }) =>
+    $isActive ? activeStar : starIcon});
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+  background-size: contain;
+  cursor: pointer;
+  margin-left: auto;
 `;

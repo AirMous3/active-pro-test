@@ -9,16 +9,20 @@ export const MessagesList = () => {
 
   return (
     <S.Container>
-      {messages.map(({ author, channel, id, content, attachments, date }) => (
-        <MessageCard
-          key={id}
-          author={author}
-          subtitle={channel}
-          content={content}
-          attachments={attachments}
-          date={date}
-        />
-      ))}
+      {messages.map(
+        ({ author, channel, id, content, attachments, date, favorite }) => (
+          <MessageCard
+            key={id}
+            author={author}
+            subtitle={channel}
+            content={content}
+            attachments={attachments}
+            date={date}
+            favorite={favorite}
+            id={id}
+          />
+        ),
+      )}
     </S.Container>
   );
 };
