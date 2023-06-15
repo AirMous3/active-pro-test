@@ -35,7 +35,9 @@ export const AuthorInfoWrapper = styled.div`
 
 export const AuthorTitle = styled.div``;
 
-export const AuthorSubTitle = styled.div``;
+export const AuthorSubTitle = styled.div`
+  font-style: italic;
+`;
 
 export const MessageWrapper = styled.div`
   margin-top: 10px;
@@ -54,6 +56,7 @@ export const MessageContent = styled.div`
   letter-spacing: -0.035em;
   color: #333333;
   max-width: 720px;
+  margin-bottom: 20px;
 `;
 
 export const MessageContentWrapper = styled.div`
@@ -62,6 +65,7 @@ export const MessageContentWrapper = styled.div`
 
 export const MessageFooter = styled.div`
   display: flex;
+  margin-top: 20px;
 
   div {
     margin-right: 10px;

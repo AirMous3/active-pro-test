@@ -1,8 +1,12 @@
+import { useSelector } from 'react-redux';
+
 import { MessageCard } from '@/entities';
 
 import * as S from './components';
 
-export const MessagesList = ({ messages }) => {
+export const MessagesList = () => {
+  const messages = useSelector((state) => state.messages.data);
+
   return (
     <S.Container>
       {messages.map(({ author, channel, id, content, attachments, date }) => (

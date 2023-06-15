@@ -1,37 +1,22 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { MessagesList } from '@/entities';
+import { MessagesList, getMessages } from '@/entities';
+import { LOADING, Loader } from '@/shared';
 
 import * as S from './components';
 
 export const Main = () => {
-  const [messages, setMessages] = useState([]);
+  const dispatch = useDispatch();
+  const status = useSelector((state) => state.messages.status);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios
-        .post(
-          `${process.env.REACT_APP_API}`,
-          {
-            actionName: 'MessagesLoad',
-            messageId: 0,
-          },
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          },
-        )
-        .then((data) => data.data.Messages);
-      setMessages(res);
-    };
-    fetchData();
-  }, []);
+    dispatch(getMessages());
+  }, [dispatch]);
 
   return (
     <S.Container>
-      <MessagesList messages={messages} />
+      {status === LOADING ? <Loader /> : <MessagesList />}
     </S.Container>
   );
 };
