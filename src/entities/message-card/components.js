@@ -1,8 +1,9 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 import image from '@/shared/assets/icons/profile-image.svg';
 
-export const Container = styled.li`
+export const Container = styled(motion.li)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

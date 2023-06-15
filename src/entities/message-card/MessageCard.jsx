@@ -1,13 +1,29 @@
+import { motion } from 'framer-motion';
+
 import { ReadMoreButton } from '@/shared';
 
 import * as S from './components';
 
+const animation = {
+  hidden: {
+    opacity: 0,
+    x: -200,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 1,
+    },
+  },
+};
+
 export const MessageCard = ({
+  attachments,
+  date,
   author,
   subtitle,
   content,
-  attachments,
-  date,
 }) => {
   const type = attachments[0]?.type;
   const url = attachments[0]?.url;
@@ -16,8 +32,14 @@ export const MessageCard = ({
     .replace(/(.*)\D\d+/, '$1');
 
   return (
-    <S.Container>
-      <div>
+    <S.Container
+      initial={animation.hidden}
+      whileInView={animation.visible}
+      exit={animation.visible}
+      viewport={{ once: true, amount: 0.2 }}
+      layout
+    >
+      <motion.div>
         <S.MessageHeader>
           <S.AuthorImage />
 
@@ -44,7 +66,7 @@ export const MessageCard = ({
             {type === 'image' && <S.MessageImage src={url} alt="image" />}
           </S.MessageContentWrapper>
         </S.MessageWrapper>
-      </div>
+      </motion.div>
 
       <S.MessageFooter>
         <div>#Новое</div>
