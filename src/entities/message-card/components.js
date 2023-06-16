@@ -10,10 +10,14 @@ export const Container = styled(motion.li)`
   flex-direction: column;
   justify-content: space-between;
   background: #ffffff;
-  border-radius: 1px;
+  border-radius: 5px;
   margin-top: 10px;
   min-height: 120px;
   padding: 10px;
+
+  &:hover {
+    box-shadow: 0 6px 8px 0 rgba(34, 60, 80, 0.2);
+  }
 `;
 
 export const MessageHeader = styled.div`

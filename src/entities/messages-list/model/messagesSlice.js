@@ -5,6 +5,8 @@ import { LOADING, READY, api, getIdFromLocalStorage } from '@/shared';
 const initialState = {
   data: [],
   status: READY,
+  addMessageToEnd: true,
+  lastId: null,
 };
 
 export const getMessages = createAsyncThunk(
@@ -21,8 +23,9 @@ export const getMessages = createAsyncThunk(
 export const getNewMessages = createAsyncThunk(
   'messages/getNewMessages',
   async (messageId, thunkAPI) => {
-    const state = thunkAPI.getState().messages.data;
-    const oldMessageId = state[state.length - 1].id;
+    const state = thunkAPI.getState().messages;
+    const oldMessageId = state.lastId;
+
     try {
       return await api.getNewMessages(oldMessageId);
     } catch (error) {
@@ -48,34 +51,51 @@ const messagesSlice = createSlice({
         item.id === id ? { ...item, favorite: !item.favorite } : item,
       );
     },
+    changeAddMessageToEnd(state) {
+      state.addMessageToEnd = !state.addMessageToEnd;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getMessages.pending, (state) => {
       state.status = LOADING;
     });
     builder.addCase(getMessages.fulfilled, (state, action) => {
-      state.data = action.payload.map((item) => {
-        //Если в лс есть айди, то накидываем ему favorite
-        const id = getIdFromLocalStorage(item.id);
-        return item.id === id ? { ...item, favorite: true } : item;
-      });
+      if (action.payload !== undefined) {
+        //Айди последнего сообщения
+        const lastMessageId = action.payload[action.payload.length - 1].id;
+        state.lastId = lastMessageId;
+
+        state.data = action.payload.map((item) => {
+          //Если в лс есть айди, то накидываем ему favorite
+          const id = getIdFromLocalStorage(item.id);
+          return item.id === id ? { ...item, favorite: true } : item;
+        });
+      }
       state.status = READY;
     });
     builder.addCase(getNewMessages.fulfilled, (state, action) => {
       if (action.payload !== undefined) {
+        const addMessageToEnd = state.addMessageToEnd;
         const newMessage = action.payload[0];
         const messageId = newMessage.id;
         const idFromLs = getIdFromLocalStorage(messageId);
+        //Меняем значение айди последнего сообщения
+        state.lastId = messageId;
 
         if (idFromLs) {
           newMessage.favorite = true;
         }
 
-        state.data.push(newMessage);
+        if (addMessageToEnd) {
+          state.data.push(newMessage);
+        } else {
+          state.data.unshift(newMessage);
+        }
       }
     });
   },
 });
 
 export const messagesReducer = messagesSlice.reducer;
-export const { addOrRemoveToFavorite } = messagesSlice.actions;
+export const { addOrRemoveToFavorite, changeAddMessageToEnd } =
+  messagesSlice.actions;

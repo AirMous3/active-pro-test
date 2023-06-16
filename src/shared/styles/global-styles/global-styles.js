@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   #root {
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
   }
 
