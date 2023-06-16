@@ -93,3 +93,19 @@ export const Star = styled.div`
   cursor: pointer;
   margin-left: auto;
 `;
+
+export const MessageVideo = styled.video`
+  width: 500px;
+  height: 300px;
+
+  @media (max-width: 650px) {
+    width: 400px;
+  }
+  @media (max-width: 550px) {
+    width: 300px;
+  }
+  @media (max-width: 450px) {
+    width: 250px;
+    height: 250px;
+  }
+`;

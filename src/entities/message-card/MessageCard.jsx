@@ -64,9 +64,9 @@ export const MessageCard = ({
             </S.MessageContent>
 
             {type === 'video' && (
-              <video width="500" height="300" controls="controls">
+              <S.MessageVideo controls="controls">
                 <source src={url} type="video/mp4" />
-              </video>
+              </S.MessageVideo>
             )}
 
             {type === 'image' && <S.MessageImage src={url} alt="image" />}
