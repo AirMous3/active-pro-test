@@ -18,6 +18,19 @@ export const getMessages = createAsyncThunk(
   },
 );
 
+export const getNewMessages = createAsyncThunk(
+  'messages/getNewMessages',
+  async (messageId, thunkAPI) => {
+    const state = thunkAPI.getState().messages.data;
+    const oldMessageId = state[state.length - 1].id;
+    try {
+      return await api.getNewMessages(oldMessageId);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+);
+
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
@@ -47,6 +60,19 @@ const messagesSlice = createSlice({
         return item.id === id ? { ...item, favorite: true } : item;
       });
       state.status = READY;
+    });
+    builder.addCase(getNewMessages.fulfilled, (state, action) => {
+      if (action.payload !== undefined) {
+        const newMessage = action.payload[0];
+        const messageId = newMessage.id;
+        const idFromLs = getIdFromLocalStorage(messageId);
+
+        if (idFromLs) {
+          newMessage.favorite = true;
+        }
+
+        state.data.push(newMessage);
+      }
     });
   },
 });

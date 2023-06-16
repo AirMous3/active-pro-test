@@ -16,4 +16,12 @@ export const api = {
       })
       .then((data) => data.data.Messages);
   },
+  getNewMessages(messageId) {
+    return instance
+      .post('', {
+        actionName: 'MessagesLoad',
+        messageId,
+      })
+      .then((data) => data.data.Messages);
+  },
 };

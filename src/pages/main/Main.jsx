@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { MessagesList, getMessages } from '@/entities';
+import { MessagesList, getMessages, getNewMessages } from '@/entities';
 import { LOADING, Loader } from '@/shared';
 
 import * as S from './components';
@@ -12,6 +12,14 @@ export const Main = () => {
 
   useEffect(() => {
     dispatch(getMessages());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      dispatch(getNewMessages());
+    }, 5000);
+
+    return () => clearInterval(intervalId);
   }, [dispatch]);
 
   return (
