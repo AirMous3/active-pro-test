@@ -65,8 +65,8 @@ const messagesSlice = createSlice({
         const lastMessageId = action.payload[action.payload.length - 1].id;
         state.lastId = lastMessageId;
 
+        //Если в лс есть айди, то накидываем ему favorite
         state.data = action.payload.map((item) => {
-          //Если в лс есть айди, то накидываем ему favorite
           const id = getIdFromLocalStorage(item.id);
           return item.id === id ? { ...item, favorite: true } : item;
         });
@@ -76,20 +76,23 @@ const messagesSlice = createSlice({
     builder.addCase(getNewMessages.fulfilled, (state, action) => {
       if (action.payload !== undefined) {
         const addMessageToEnd = state.addMessageToEnd;
-        const newMessage = action.payload[0];
-        const messageId = newMessage.id;
-        const idFromLs = getIdFromLocalStorage(messageId);
+        const lastMessageId = action.payload[0].id;
+        //проходимся и проставляем избранное
+        const newMessages = action.payload.map((item) =>
+          item.id === getIdFromLocalStorage(item.id)
+            ? {
+                ...item,
+                favorite: true,
+              }
+            : item,
+        );
+
         //Меняем значение айди последнего сообщения
-        state.lastId = messageId;
-
-        if (idFromLs) {
-          newMessage.favorite = true;
-        }
-
+        state.lastId = lastMessageId;
         if (addMessageToEnd) {
-          state.data.push(newMessage);
+          state.data = state.data.concat(newMessages);
         } else {
-          state.data.unshift(newMessage);
+          state.data.unshift(...newMessages);
         }
       }
     });
