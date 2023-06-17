@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { LOADING, READY, api, getIdFromLocalStorage } from '@/shared';
 
+
 const initialState = {
   data: [],
   status: READY,
@@ -51,8 +52,15 @@ const messagesSlice = createSlice({
         item.id === id ? { ...item, favorite: !item.favorite } : item,
       );
     },
-    changeAddMessageToEnd(state) {
+    changeSorting(state) {
       state.addMessageToEnd = !state.addMessageToEnd;
+      const sortToEnd = state.addMessageToEnd;
+
+      if (!sortToEnd) {
+        state.data = state.data.sort((a, b) => (a.id > b.id ? -1 : 1));
+      } else {
+        state.data = state.data.sort((a, b) => (a.id > b.id ? 1 : -1));
+      }
     },
   },
   extraReducers: (builder) => {
@@ -100,5 +108,4 @@ const messagesSlice = createSlice({
 });
 
 export const messagesReducer = messagesSlice.reducer;
-export const { addOrRemoveToFavorite, changeAddMessageToEnd } =
-  messagesSlice.actions;
+export const { addOrRemoveToFavorite, changeSorting } = messagesSlice.actions;

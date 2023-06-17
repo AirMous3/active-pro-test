@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeAddMessageToEnd } from '@/entities';
+import { changeSorting } from '@/entities';
 import { Button } from '@/shared';
 
 import * as S from './components';
@@ -11,7 +11,7 @@ export const Header = () => {
     (state) => state.messages.addMessageToEnd,
   );
   const handleButton = () => {
-    dispatch(changeAddMessageToEnd());
+    dispatch(changeSorting());
   };
 
   return (
