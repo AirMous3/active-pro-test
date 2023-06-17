@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { LOADING, READY, api, getIdFromLocalStorage } from '@/shared';
 
-
 const initialState = {
   data: [],
   status: READY,
@@ -56,11 +55,9 @@ const messagesSlice = createSlice({
       state.addMessageToEnd = !state.addMessageToEnd;
       const sortToEnd = state.addMessageToEnd;
 
-      if (!sortToEnd) {
-        state.data = state.data.sort((a, b) => (a.id > b.id ? -1 : 1));
-      } else {
-        state.data = state.data.sort((a, b) => (a.id > b.id ? 1 : -1));
-      }
+      state.data = state.data.sort((a, b) =>
+        !sortToEnd ? (a.id > b.id ? -1 : 1) : a.id > b.id ? 1 : -1,
+      );
     },
   },
   extraReducers: (builder) => {
