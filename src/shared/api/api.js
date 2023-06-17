@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API,
+  baseURL: 'http://a0830433.xsph.ru/',
   headers: {
     'Content-Type': 'multipart/form-data',
   },
